@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Music Player</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+            text-align:center;
+        }
+        .container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        h1 {
+            margin-bottom: 20px;
+        }
+        .player {
+            margin-bottom: 20px;
+        }
+        .player input {
+            margin-bottom: 10px;
+            padding: 10px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .player button {
+            padding: 10px;
+            width: 100%;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .player button:hover {
+            background-color: #0056b3;
+        }
+        audio, video {
+            width: 100%;
+            margin-top: 20px;
+            outline: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Online Music Player</h1>
+        <div class="player">
+            <input type="file" id="fileInput" accept="audio/mp3, audio/mp4, video/mp4">
+            <button onclick="playMedia()">Play</button>
+            <audio id="audioPlayer" controls style="display: none;"></audio>
+            <video id="videoPlayer" controls style="display: none;"></video>
+        </div>
+    </div>
+
+    <script>
+        function playMedia() {
+            const fileInput = document.getElementById('fileInput');
+            const audioPlayer = document.getElementById('audioPlayer');
+            const videoPlayer = document.getElementById('videoPlayer');
+            const file = fileInput.files[0];
+
+            if (!file) {
+                alert('Please select a file.');
+                return;
+            }
+
+            const fileURL = URL.createObjectURL(file);
+
+            if (file.type.startsWith('audio/')) {
+                audioPlayer.src = fileURL;
+                audioPlayer.style.display = 'block';
+                videoPlayer.style.display = 'none';
+            } else if (file.type.startsWith('video/')) {
+                videoPlayer.src = fileURL;
+                videoPlayer.style.display = 'block';
+                audioPlayer.style.display = 'none';
+            } else {
+                alert('Unsupported file type. Please upload an MP3 or MP4 file.');
+            }
+        }
+    </script>
+</body>
+</html>
